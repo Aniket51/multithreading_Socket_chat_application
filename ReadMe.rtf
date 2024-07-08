@@ -1,0 +1,131 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2761
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\froman\fcharset0 Times-Roman;
+}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\csgray\c0;}
+{\*\listtable{\list\listtemplateid1\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid1\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid1}
+{\list\listtemplateid2\listhybrid{\listlevel\levelnfc23\levelnfcn23\leveljc0\leveljcn0\levelfollow0\levelstartat1\levelspace360\levelindent0{\*\levelmarker \{disc\}}{\leveltext\leveltemplateid101\'01\uc0\u8226 ;}{\levelnumbers;}\fi-360\li720\lin720 }{\listname ;}\listid2}}
+{\*\listoverridetable{\listoverride\listid1\listoverridecount0\ls1}{\listoverride\listid2\listoverridecount0\ls2}}
+\paperw11900\paperh16840\margl1440\margr1440\vieww28900\viewh15260\viewkind0
+\deftab720
+\pard\pardeftab720\sa280\partightenfactor0
+
+\f0\fs28 \cf0 \expnd0\expndtw0\kerning0
+Steps to Run the Java Code\
+\pard\pardeftab720\sa240\partightenfactor0
+
+\fs24 \cf0 Step 1: Extract the 
+\fs26 player.zip
+\fs24  file to a directory of your choice.\
+Step 2: Open a terminal and navigate to the 
+\fs26 player
+\fs24  folder.\
+Step 3: run command  \'93 
+\f1\fs22 \cf2 \kerning1\expnd0\expndtw0 \CocoaLigature0 mvn clean package\'94
+\f0\fs26 \cf0 \expnd0\expndtw0\kerning0
+\CocoaLigature1 \
+
+\fs24 Step 4: Choose the scenario you want to run:\
+\
+\
+\pard\pardeftab720\sa319\partightenfactor0
+\cf0 Scenario 1: Sending Messages via Same Java Process\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 To run this scenario, execute the following command :  \'93
+\fs26 ./sameProcess.sh\'94\
+
+\fs24 If you encounter permission issues, use:
+\fs26   \'93sh ./sameProcess.sh\'94\
+
+\fs24 This script initiates communication between players within the same Java process using multithreading.\
+\
+\pard\pardeftab720\sa319\partightenfactor0
+\cf0 Scenario 2: Every Player in Separate Java Process(make sure port 5000 and 5001 are not busy)\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 To run this scenario, execute the following command:
+\fs26  \'93./diffProcess.sh\'94\
+
+\fs24 If you encounter permission issues, use:
+\fs26  \'93sh ./diffProcess.sh\'94\
+
+\fs24 This script launches separate Java processes for each player, communicating over sockets.\
+If you face of port already used then you can either kill the PID or change to available ports by making changes into diffProcess.sh\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \kerning1\expnd0\expndtw0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+\cf0 \
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+Scenario 1: Sending Messages via Same Java Process\
+PlayersCommunication: The 
+\fs26 PlayersCommunication
+\fs24  class manages the coordination and communication between two 
+\fs26 Player
+\fs24  instances within the same Java process. It initializes both players, starts them as threads (
+\fs26 thread1
+\fs24  and 
+\fs26 thread2
+\fs24 ), and ensures they complete their tasks using thread synchronization (
+\fs26 join()
+\fs24 ). This approach allows 
+\fs26 player1
+\fs24  and 
+\fs26 player2
+\fs24  to operate concurrently and handle inter-player communication or synchronization as necessary.\
+Player: The 
+\fs26 Player
+\fs24  class facilitates synchronized communication between two players using shared resources. Each 
+\fs26 Player
+\fs24  instance is initialized with a name, a synchronization lock (
+\fs26 lock
+\fs24 ), and a reference to the other player (
+\fs26 otherPlayer
+\fs24 ). It manages message passing via 
+\fs26 sendMessage()
+\fs24  and 
+\fs26 receiveMessage()
+\fs24  methods, ensuring thread-safe communication through synchronized blocks on the 
+\fs26 lock
+\fs24  object.\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls1\ilvl0\cf0 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Initiator (
+\fs26 isInitiator == true
+\fs24 ): Sends a predetermined number of initial messages and waits for responses. Each received message is processed by incrementing a counter and generating a response.\
+\ls1\ilvl0\kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Non-initiator (
+\fs26 isInitiator == false
+\fs24 ): Waits to receive messages from the initiator, processing each message similarly.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 The 
+\fs26 run()
+\fs24  method, implemented from the 
+\fs26 Runnable
+\fs24  interface, defines the main behavior of each player within its own thread. Upon exchanging a specified number of messages (
+\fs26 MAX_MESSAGES
+\fs24 ), players terminate execution gracefully. This design ensures efficient and coordinated communication while adhering to thread safety principles.
+\f2 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardeftab720\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\
+\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 \expnd0\expndtw0\kerning0
+Scenario 2: Every Player in Separate Java Process\
+PlayerMain: The 
+\fs26 PlayerMain
+\fs24  class serves as the entry point of the application. It parses command line arguments to configure 
+\fs26 Player
+\fs24  instances, starts player threads, and waits for their completion.\
+Player: The 
+\fs26 Player
+\fs24  class utilizes socket programming for message exchange between two players, each running in a separate Java process. It manages sending and receiving messages:\
+\pard\tx220\tx720\pardeftab720\li720\fi-720\partightenfactor0
+\ls2\ilvl0\cf0 \kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Initiator: Sends the initial message to start the exchange. Listens for responses, processes each message by appending a counter, and sends back a response.\
+\ls2\ilvl0\kerning1\expnd0\expndtw0 {\listtext	\uc0\u8226 	}\expnd0\expndtw0\kerning0
+Non-initiator: Listens for incoming messages, processes each by appending a counter, and sends a response back.\
+\pard\pardeftab720\sa240\partightenfactor0
+\cf0 The class ensures graceful connection closure after exchanging a fixed number of messages (10 messages in this case).\
+}
