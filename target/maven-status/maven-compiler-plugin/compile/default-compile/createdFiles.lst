@@ -1,0 +1,4 @@
+org/same/process/player/PlayersCommunication.class
+com/seperate/process/player/Player.class
+com/seperate/process/player/PlayerMain.class
+org/same/process/player/Player.class
